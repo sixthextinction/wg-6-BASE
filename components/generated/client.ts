@@ -12,6 +12,9 @@ import {
 	FetchUserRequestOptions,
 } from "@wundergraph/sdk/client";
 import type {
+	AddMessageResponse,
+	AddMessageInput,
+	AddMessageResponseData,
 	AllMessagesResponse,
 	AllMessagesResponseData,
 	AllSessionsResponse,
@@ -38,12 +41,15 @@ export interface AuthProvider {
 }
 
 export const defaultClientConfig: ClientConfig = {
-	applicationHash: "632c441a",
+	applicationHash: "0c33dfed",
 	baseURL: "http://localhost:9991",
 	sdkVersion: "0.130.2",
 };
 
 export const operationMetadata: OperationMetadata = {
+	AddMessage: {
+		requiresAuthentication: false,
+	},
 	AllMessages: {
 		requiresAuthentication: false,
 	},
@@ -122,7 +128,13 @@ export type Queries = {
 	};
 };
 
-export type Mutations = {};
+export type Mutations = {
+	AddMessage: {
+		input: AddMessageInput;
+		data: AddMessageResponseData;
+		requiresAuthentication: false;
+	};
+};
 
 export type Subscriptions = {};
 

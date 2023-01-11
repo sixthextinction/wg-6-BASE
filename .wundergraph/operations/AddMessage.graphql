@@ -1,0 +1,8 @@
+mutation CreateChat ($content: String!, $userId: String!){
+  db_createChat(data: {
+    content: $content
+    userId: $userId
+  }){
+    _id
+  }
+}
