@@ -1,0 +1,14 @@
+query AllSessions($userId: String! @internal) {
+  db_allSessions {
+    data{
+      userId @export(as: "userId")
+      user: _join @transform(get: "db_userByUserID"){
+        db_userByUserID(userID: $userId) {
+          name
+          email
+          image
+        }
+      }
+    }
+  }
+}

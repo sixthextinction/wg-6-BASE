@@ -11,7 +11,12 @@ import {
 	SubscriptionEventHandler,
 	FetchUserRequestOptions,
 } from "@wundergraph/sdk/client";
-import type { AllMessagesResponse, AllMessagesResponseData } from "./models";
+import type {
+	AllMessagesResponse,
+	AllMessagesResponseData,
+	AllSessionsResponse,
+	AllSessionsResponseData,
+} from "./models";
 
 export type UserRole = "admin" | "user";
 
@@ -30,13 +35,16 @@ export interface AuthProvider {
 }
 
 export const defaultClientConfig: ClientConfig = {
-	applicationHash: "fdc221f4",
+	applicationHash: "6770f1cd",
 	baseURL: "http://localhost:9991",
 	sdkVersion: "0.130.2",
 };
 
 export const operationMetadata: OperationMetadata = {
 	AllMessages: {
+		requiresAuthentication: false,
+	},
+	AllSessions: {
 		requiresAuthentication: false,
 	},
 };
@@ -94,6 +102,12 @@ export type Queries = {
 		requiresAuthentication: false;
 		liveQuery: boolean;
 	};
+	AllSessions: {
+		input?: undefined;
+		data: AllSessionsResponseData;
+		requiresAuthentication: false;
+		liveQuery: boolean;
+	};
 };
 
 export type Mutations = {};
@@ -104,6 +118,12 @@ export type LiveQueries = {
 	AllMessages: {
 		input?: undefined;
 		data: AllMessagesResponseData;
+		liveQuery: true;
+		requiresAuthentication: false;
+	};
+	AllSessions: {
+		input?: undefined;
+		data: AllSessionsResponseData;
 		liveQuery: true;
 		requiresAuthentication: false;
 	};

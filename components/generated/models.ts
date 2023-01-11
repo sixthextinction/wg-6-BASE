@@ -15,7 +15,15 @@ export interface InternalAllMessagesInput {
 	userId: string;
 }
 
+export interface InternalAllSessionsInput {
+	userId: string;
+}
+
 export interface InjectedAllMessagesInput {
+	userId: string;
+}
+
+export interface InjectedAllSessionsInput {
 	userId: string;
 }
 
@@ -24,10 +32,28 @@ export interface AllMessagesResponse {
 	errors?: ReadonlyArray<GraphQLError>;
 }
 
+export interface AllSessionsResponse {
+	data?: AllSessionsResponseData;
+	errors?: ReadonlyArray<GraphQLError>;
+}
+
 export interface AllMessagesResponseData {
 	db_allMessages: {
 		data: {
 			content: string;
+			userId: string;
+			user: {
+				name?: string;
+				email?: string;
+				image?: string;
+			};
+		}[];
+	};
+}
+
+export interface AllSessionsResponseData {
+	db_allSessions: {
+		data: {
 			userId: string;
 			user: {
 				name?: string;
