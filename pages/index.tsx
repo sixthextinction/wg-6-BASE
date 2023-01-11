@@ -8,14 +8,14 @@ const Home: NextPage = () => {
   return (
     <div>
       {session ? (
-        <>
-          {/* <span className="text-red-500 font-semibold">
+        <div className="w-full h-[85vh] ">
+          <span className="text-red-500 font-semibold">
             DEBUG: {JSON.stringify(session, null, 2)}
-          </span> */}
+          </span>
           <Chat />
-        </>
+        </div>
       ) : (
-        <div className="w-full h-[calc(100vh-80px)] flex flex-col items-center justify-center bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black p-4 ">
+        <div className="w-full h-full flex flex-col items-center justify-center bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black p-4 ">
           <span className="text-white text-8xl font-semibold ">Hi!</span> <br />
           <span className="text-white text-lg">You need to be signed in to access our Workgroup chat.</span> <br />
           <button className=" bg-teal-500 hover:bg-teal-700 text-gray-800 font-bold py-2 px-4 rounded-full" onClick={() => signIn()}>

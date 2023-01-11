@@ -1,0 +1,3 @@
+query UserByEmail($emailId: String!) {
+  db_userIDByEmail(email: $emailId)
+}

@@ -10,10 +10,6 @@ import { NextJsTemplate } from '@wundergraph/nextjs/dist/template';
 import server from './wundergraph.server';
 import operations from './wundergraph.operations';
 
-const spaceX = introspect.graphql({
-	apiNamespace: 'spacex',
-	url: 'https://spacex-api.fly.dev/graphql/',
-});
 
 const fauna = introspect.graphql({
 	apiNamespace: 'db',

@@ -87,10 +87,18 @@ import { useSession } from "next-auth/react";
 // ];
 
 const ChatWindow = () => {
+  const { data: session } = useSession();
   const { data: allMessages } = useQuery({
     operationName: "AllMessages",
+    // liveQuery:true
   });
-  const { data: session } = useSession();
+  const { data: currentUserID } = useQuery({
+    operationName: "UserByEmail",
+    input: {
+      emailId: session.user.email
+    }
+  })
+
   const [newMessage, setNewMessage] = React.useState<string>("");
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -100,7 +108,7 @@ const ChatWindow = () => {
   return (
     <div className="w-[80%] bg-black">
       <div className="w-full h-[95%] bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black p-4  overflow-y-scroll scrollbar scrollbar-thumb-teal-500  scrollbar-track-black ">
-        {/* <pre className="text-white">{JSON.stringify(allMessages, null, 2)}</pre> */}
+        <pre className="text-white">{currentUserID?.db_userIDByEmail}</pre>
         {/* Chat messages go here */}
         {allMessages?.db_allMessages?.data.map((message) => (
           /* if message by currently logged-in user */
@@ -111,11 +119,12 @@ const ChatWindow = () => {
                 : "flex flex-col my-4 mr-auto ml-2 p-4 w-fit text-left text-zinc-200 bg-gray-900 rounded-lg"
             }
           >
-            <span className="text-sm underline mb-2"> {message.user?.name} </span>
+            <span className="text-sm underline mb-2">
+              {message.user?.name}
+            </span>
             <span className=" font-bold ">{message.content}</span>
           </div>
         ))}
-        
       </div>
       {/* Input field for sending messages */}
       <div className="w-[98%] h-[5%] bg-black px-2 py-1">

@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       <header className="sticky top-0 z-50">
         <Navbar />
       </header>
-      <main className="bg-black">
+      <main className="h-[calc(100vh-80px)] bg-black">
         <Component {...pageProps} />
       </main>
     </SessionProvider>

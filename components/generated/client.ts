@@ -16,6 +16,9 @@ import type {
 	AllMessagesResponseData,
 	AllSessionsResponse,
 	AllSessionsResponseData,
+	UserByEmailResponse,
+	UserByEmailInput,
+	UserByEmailResponseData,
 } from "./models";
 
 export type UserRole = "admin" | "user";
@@ -35,7 +38,7 @@ export interface AuthProvider {
 }
 
 export const defaultClientConfig: ClientConfig = {
-	applicationHash: "6770f1cd",
+	applicationHash: "632c441a",
 	baseURL: "http://localhost:9991",
 	sdkVersion: "0.130.2",
 };
@@ -45,6 +48,9 @@ export const operationMetadata: OperationMetadata = {
 		requiresAuthentication: false,
 	},
 	AllSessions: {
+		requiresAuthentication: false,
+	},
+	UserByEmail: {
 		requiresAuthentication: false,
 	},
 };
@@ -108,6 +114,12 @@ export type Queries = {
 		requiresAuthentication: false;
 		liveQuery: boolean;
 	};
+	UserByEmail: {
+		input: UserByEmailInput;
+		data: UserByEmailResponseData;
+		requiresAuthentication: false;
+		liveQuery: boolean;
+	};
 };
 
 export type Mutations = {};
@@ -124,6 +136,12 @@ export type LiveQueries = {
 	AllSessions: {
 		input?: undefined;
 		data: AllSessionsResponseData;
+		liveQuery: true;
+		requiresAuthentication: false;
+	};
+	UserByEmail: {
+		input: UserByEmailInput;
+		data: UserByEmailResponseData;
 		liveQuery: true;
 		requiresAuthentication: false;
 	};

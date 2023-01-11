@@ -1,0 +1,24 @@
+type users  {
+    name: String!
+    email: String!
+    image: String!
+}
+
+type chat {
+    content: String!
+    userId: String!
+}
+
+type sessions {
+    sessionToken: String!
+    userId:  String!
+    expires: String!
+}
+
+type Query {
+    allMessages: [chat!]
+    allUsers: [users!]
+    allSessions: [sessions!]
+    userByUserID(userID: String!): users! @resolver(name: "getUserByUserID")
+    userIDByEmail(email: String!): String! @resolver(name: "getUserIDByEmail")
+}

@@ -11,7 +11,7 @@ type Props = {
 
 const Chat = () => {
   return (
-    <div className="flex w-screen h-screen ">
+    <div className="flex w-full h-full">
       {/* Sidebar with list of online users */}
       <OnlineUsers />
       {/* Main chat window */}
