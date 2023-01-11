@@ -1,0 +1,15 @@
+query FindAllMessages($userId: String! @internal) {
+  db_allMessages {
+    data {
+      content
+      userId @export(as: "userId")
+      user: _join @transform(get: "db_userByUserID"){
+        db_userByUserID(userID: $userId) {
+          name
+          email
+          image
+        }
+      }
+    }
+  }
+}

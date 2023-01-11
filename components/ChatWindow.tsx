@@ -107,14 +107,15 @@ const ChatWindow = () => {
           <div
             className={
               message.user?.email === session.user.email
-                ? "flex flex-col divide-y my-4 ml-auto mr-2 px-4 py-2 w-fit text-right text-gray-700 bg-zinc-200 rounded-lg"
-                : "flex flex-col divide-y my-4 mr-auto ml-2 p-4 w-fit text-left text-zinc-200 bg-gray-900 rounded-lg"
+                ? "flex flex-col my-4 ml-auto mr-2 px-4 py-2 w-fit text-right text-gray-700 bg-zinc-200 rounded-lg"
+                : "flex flex-col my-4 mr-auto ml-2 p-4 w-fit text-left text-zinc-200 bg-gray-900 rounded-lg"
             }
           >
-            <span className="text-sm"> {message.user?.name} </span>
+            <span className="text-sm underline mb-2"> {message.user?.name} </span>
             <span className=" font-bold ">{message.content}</span>
           </div>
         ))}
+        
       </div>
       {/* Input field for sending messages */}
       <div className="w-[98%] h-[5%] bg-black px-2 py-1">

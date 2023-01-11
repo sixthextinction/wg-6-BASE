@@ -11,14 +11,29 @@ export interface GraphQLError {
 	path?: ReadonlyArray<string | number>;
 }
 
-export interface DragonsResponse {
-	data?: DragonsResponseData;
+export interface InternalAllMessagesInput {
+	userId: string;
+}
+
+export interface InjectedAllMessagesInput {
+	userId: string;
+}
+
+export interface AllMessagesResponse {
+	data?: AllMessagesResponseData;
 	errors?: ReadonlyArray<GraphQLError>;
 }
 
-export interface DragonsResponseData {
-	spacex_dragons?: {
-		name?: string;
-		active?: boolean;
-	}[];
+export interface AllMessagesResponseData {
+	db_allMessages: {
+		data: {
+			content: string;
+			userId: string;
+			user: {
+				name?: string;
+				email?: string;
+				image?: string;
+			};
+		}[];
+	};
 }

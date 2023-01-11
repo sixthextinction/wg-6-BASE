@@ -11,7 +11,7 @@ import {
 	SubscriptionEventHandler,
 	FetchUserRequestOptions,
 } from "@wundergraph/sdk/client";
-import type { DragonsResponse, DragonsResponseData } from "./models";
+import type { AllMessagesResponse, AllMessagesResponseData } from "./models";
 
 export type UserRole = "admin" | "user";
 
@@ -30,13 +30,13 @@ export interface AuthProvider {
 }
 
 export const defaultClientConfig: ClientConfig = {
-	applicationHash: "f46335cd",
+	applicationHash: "fdc221f4",
 	baseURL: "http://localhost:9991",
 	sdkVersion: "0.130.2",
 };
 
 export const operationMetadata: OperationMetadata = {
-	Dragons: {
+	AllMessages: {
 		requiresAuthentication: false,
 	},
 };
@@ -88,9 +88,9 @@ export const createClient = (config?: CreateClientConfig) => {
 };
 
 export type Queries = {
-	Dragons: {
+	AllMessages: {
 		input?: undefined;
-		data: DragonsResponseData;
+		data: AllMessagesResponseData;
 		requiresAuthentication: false;
 		liveQuery: boolean;
 	};
@@ -101,9 +101,9 @@ export type Mutations = {};
 export type Subscriptions = {};
 
 export type LiveQueries = {
-	Dragons: {
+	AllMessages: {
 		input?: undefined;
-		data: DragonsResponseData;
+		data: AllMessagesResponseData;
 		liveQuery: true;
 		requiresAuthentication: false;
 	};

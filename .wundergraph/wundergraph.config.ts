@@ -15,9 +15,21 @@ const spaceX = introspect.graphql({
 	url: 'https://spacex-api.fly.dev/graphql/',
 });
 
+const fauna = introspect.graphql({
+	apiNamespace: 'db',
+	url: new EnvironmentVariable('FAUNADB_GRAPHQL_URL'),
+	headers: (builder) => {
+	  builder.addStaticHeader(
+		'Authorization',
+		new EnvironmentVariable('FAUNADB_TOKEN')
+	  )
+	  return builder
+	},
+  })
+
 // configureWunderGraph emits the configuration
 configureWunderGraphApplication({
-	apis: [spaceX],
+	apis: [fauna],
 	server,
 	operations,
 	codeGenerators: [
