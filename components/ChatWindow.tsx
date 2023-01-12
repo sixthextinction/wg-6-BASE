@@ -7,91 +7,8 @@ import {
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
-/* fetch inside this component */
-// const chatMessages = [
-//   {
-//     id: 234,
-//     message: ` Lorem ipsum odor amet, consectetuer adipiscing elit. Ac purus in massa egestas mollis varius;
-//             dignissim elementum. Mollis tincidunt mattis hendrerit dolor eros enim, nisi ligula ornare.
-//             Hendrerit parturient habitant pharetra rutrum gravida porttitor eros feugiat. Mollis elit
-//             sodales taciti duis praesent id. Consequat urna vitae morbi nunc congue.`,
-//     userId: 1,
-//   },
-//   {
-//     id: 235,
-
-//     message: ` Non etiam tempor id arcu magna ante eget. Nec per posuere cubilia cras porttitor condimentum
-//             orci suscipit. Leo maecenas in tristique, himenaeos elementum placerat. Taciti rutrum nostra,
-//             eget cursus velit ultricies. Quam molestie tellus himenaeos cubilia congue vivamus ultricies.
-//             Interdum praesent ut penatibus fames eros ad consectetur sed.`,
-//     userId: 2,
-//   },
-//   {
-//     id: 236,
-
-//     message: ` Non etiam tempor id arcu magna ante eget. Nec per posuere cubilia cras porttitor condimentum
-//             orci suscipit. Leo maecenas in tristique, himenaeos elementum placerat. Taciti rutrum nostra,
-//             eget cursus velit ultricies. Quam molestie tellus himenaeos cubilia congue vivamus ultricies.
-//             Interdum praesent ut penatibus fames eros ad consectetur sed.`,
-//     userId: 2,
-//   },
-//   {
-//     id: 237,
-
-//     message: ` Non etiam tempor id arcu magna ante eget. Nec per posuere cubilia cras porttitor condimentum
-//             orci suscipit. Leo maecenas in tristique, himenaeos elementum placerat. Taciti rutrum nostra,
-//             eget cursus velit ultricies. Quam molestie tellus himenaeos cubilia congue vivamus ultricies.
-//             Interdum praesent ut penatibus fames eros ad consectetur sed.`,
-//     userId: 2,
-//   },
-//   {
-//     id: 238,
-
-//     message: ` Non etiam tempor id arcu magna ante eget. Nec per posuere cubilia cras porttitor condimentum
-//             orci suscipit. Leo maecenas in tristique, himenaeos elementum placerat. Taciti rutrum nostra,
-//             eget cursus velit ultricies. Quam molestie tellus himenaeos cubilia congue vivamus ultricies.
-//             Interdum praesent ut penatibus fames eros ad consectetur sed.`,
-//     userId: 4,
-//   },
-//   {
-//     id: 239,
-
-//     message: ` Non etiam tempor id arcu magna ante eget. Nec per posuere cubilia cras porttitor condimentum
-//             orci suscipit. Leo maecenas in tristique, himenaeos elementum placerat. Taciti rutrum nostra,
-//             eget cursus velit ultricies. Quam molestie tellus himenaeos cubilia congue vivamus ultricies.
-//             Interdum praesent ut penatibus fames eros ad consectetur sed.`,
-//     userId: 6,
-//   },
-//   {
-//     id: 240,
-
-//     message: ` Non etiam tempor id arcu magna ante eget. Nec per posuere cubilia cras porttitor condimentum
-//             orci suscipit. Leo maecenas in tristique, himenaeos elementum placerat. Taciti rutrum nostra,
-//             eget cursus velit ultricies. Quam molestie tellus himenaeos cubilia congue vivamus ultricies.
-//             Interdum praesent ut penatibus fames eros ad consectetur sed.`,
-//     userId: 2,
-//   },
-//   {
-//     id: 241,
-
-//     message: ` Non etiam tempor id arcu magna ante eget. Nec per posuere cubilia cras porttitor condimentum
-//             orci suscipit. Leo maecenas in tristique, himenaeos elementum placerat. Taciti rutrum nostra,
-//             eget cursus velit ultricies. Quam molestie tellus himenaeos cubilia congue vivamus ultricies.
-//             Interdum praesent ut penatibus fames eros ad consectetur sed.`,
-//     userId: 3,
-//   },
-//   {
-//     id: 242,
-
-//     message: ` Non etiam tempor id arcu magna ante eget. Nec per posuere cubilia cras porttitor condimentum
-//             orci suscipit. Leo maecenas in tristique, himenaeos elementum placerat. Taciti rutrum nostra,
-//             eget cursus velit ultricies. Quam molestie tellus himenaeos cubilia congue vivamus ultricies.
-//             Interdum praesent ut penatibus fames eros ad consectetur sed.`,
-//     userId: 1,
-//   },
-// ];
-
 const ChatWindow = () => {
+  const [submitDisabled, setSubmitDisabled] = React.useState(true);
   const { data: session } = useSession();
   const { data: allMessages } = useQuery({
     operationName: "AllMessages",
@@ -103,14 +20,18 @@ const ChatWindow = () => {
       emailId: session.user.email,
     },
   });
-  const { data, error, trigger } = useMutation({
+  const {
+    data: addedMessageID,
+    error,
+    trigger,
+    isMutating
+  } = useMutation({
     operationName: "AddMessage",
   });
 
   const [newMessage, setNewMessage] = React.useState<string>("");
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    // alert("entered : " + newMessage);
     //trigger mutation with current message and userid
     trigger({
       content: newMessage,
@@ -118,6 +39,7 @@ const ChatWindow = () => {
     });
     // then reset message and redisable button
     setNewMessage("");
+    setSubmitDisabled(true);
   };
   return (
     <div className="w-[80%] ">
@@ -149,13 +71,21 @@ const ChatWindow = () => {
           <input
             type="text"
             value={newMessage}
-            onChange={(event) => setNewMessage(event.target.value)}
+            onChange={(event) => {
+              setNewMessage(event.target.value);
+              if (event.target.value.length > 0) {
+                setSubmitDisabled(false);
+              } else {
+                setSubmitDisabled(true);
+              }
+            }}
             placeholder="Type your message here..."
-            className="bg-zinc-200 text-gray-900 rounded-md border-[1px] p-2 w-5/6 z-10"
+            className="bg-zinc-200 text-gray-900 rounded-md focus:outline-none border-[1px] p-2 w-5/6 z-10"
           />
           <button
             type="submit"
-            className="w-1/6 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-r-full z-20"
+            className="w-1/6 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-r-full z-20 disabled:bg-teal-200 disabled:text-gray-500"
+            disabled={submitDisabled || isMutating}
           >
             Send
           </button>
