@@ -6,10 +6,16 @@ import {
 } from "../components/generated/nextjs";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import epochToTimestampString from "../utils/epochToTimestampString";
 
 const ChatWindow = () => {
-  const [submitDisabled, setSubmitDisabled] = React.useState(true);
+  /**
+   * get current session data with nextauth
+   *  */
   const { data: session } = useSession();
+  /**
+   * queries + mutations with WG
+   */
   const { data: allMessages } = useQuery({
     operationName: "AllMessages",
     // liveQuery:true
@@ -24,23 +30,34 @@ const ChatWindow = () => {
     data: addedMessageID,
     error,
     trigger,
-    isMutating
+    isMutating,
   } = useMutation({
     operationName: "AddMessage",
   });
-
+  /**
+   * local state
+   */
+  const [submitDisabled, setSubmitDisabled] = React.useState<boolean>(true);
   const [newMessage, setNewMessage] = React.useState<string>("");
+
+  /**
+   * event handlers
+   */
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    //trigger mutation with current message and userid
+    //trigger mutation with current message, userid, and timestamp
     trigger({
       content: newMessage,
       userId: currentUserID?.db_userIDByEmail,
+      timestamp: epochToTimestampString(
+        Math.floor(new Date().getTime() / 1000.0)
+      ),
     });
     // then reset message and redisable button
     setNewMessage("");
     setSubmitDisabled(true);
   };
+
   return (
     <div className="w-[80%] ">
       <div className="w-full h-[93%] bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black p-4  overflow-y-scroll scrollbar scrollbar-thumb-teal-500  scrollbar-track-black ">
@@ -51,8 +68,8 @@ const ChatWindow = () => {
           <div
             className={
               message.user?.email === session.user.email
-                ? "flex flex-col my-4 ml-auto mr-2 px-4 py-2 w-fit text-right text-gray-700 bg-zinc-200 rounded-lg"
-                : "flex flex-col my-4 mr-auto ml-2 p-4 w-fit text-left text-zinc-200 bg-gray-900 rounded-lg  "
+                ? "flex flex-col max-w-md  my-4 ml-auto mr-2 px-4 py-2 w-fit  text-gray-700 bg-zinc-200 rounded-lg"
+                : "flex flex-col max-w-md my-4 mr-auto ml-2 p-4 w-fit  text-zinc-200 bg-gray-900 rounded-lg  "
             }
           >
             <Link href={`https://www.github.com/${message.user?.name}`}>
@@ -61,7 +78,17 @@ const ChatWindow = () => {
               </span>
             </Link>
 
-            <span className=" font-bold ">{message.content}</span>
+            <span className="font-bold ">{message.content}</span>
+
+            <span
+              className={`text-xs text-right pt-2 ${
+                message.user?.email === session.user.email
+                  ? "text-red-700"
+                  : "text-teal-500"
+              } font-bold mb-2 rounded-lg`}
+            >
+              {message.timestamp}
+            </span>
           </div>
         ))}
       </div>

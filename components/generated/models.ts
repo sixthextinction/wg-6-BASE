@@ -3,6 +3,7 @@
 export interface AddMessageInput {
 	content: string;
 	userId: string;
+	timestamp: string;
 }
 
 export interface UserByEmailInput {
@@ -21,6 +22,7 @@ export interface GraphQLError {
 export interface InternalAddMessageInput {
 	content: string;
 	userId: string;
+	timestamp: string;
 }
 
 export interface InternalAllMessagesInput {
@@ -38,6 +40,7 @@ export interface InternalUserByEmailInput {
 export interface InjectedAddMessageInput {
 	content: string;
 	userId: string;
+	timestamp: string;
 }
 
 export interface InjectedAllMessagesInput {
@@ -82,6 +85,7 @@ export interface AllMessagesResponseData {
 	db_allMessages: {
 		data: {
 			content: string;
+			timestamp: string;
 			userId: string;
 			user: {
 				name?: string;
