@@ -30,7 +30,7 @@ const ChatWindow = () => {
    */
   const { data: allMessages } = useQuery({
     operationName: "AllMessages",
-    // liveQuery:true
+    liveQuery:true
   });
   const { data: currentUserID } = useQuery({
     operationName: "UserByEmail",
@@ -51,6 +51,10 @@ const ChatWindow = () => {
    */
   const [submitDisabled, setSubmitDisabled] = React.useState<boolean>(true);
   const [newMessage, setNewMessage] = React.useState<string>("");
+  const messagesRef = React.useRef(null);
+  React.useEffect(() => {
+    messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+  }, [allMessages]); // Only re-run the effect if messages state changes
 
   /**
    * event handlers
@@ -66,13 +70,17 @@ const ChatWindow = () => {
       ),
     });
     // then reset message and redisable button
+
     setNewMessage("");
     setSubmitDisabled(true);
   };
   //--------------------------------------------------------------------------------------------------------------------
   return (
-    <div className="w-[85%] ">
-      <div className="scrollbar scrollbar-thumb-teal-500 scrollbar-track-black h-[93%] w-full overflow-y-scroll bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))]  from-gray-700 via-gray-900 to-black  p-4 ">
+    <div className="w-[80%] ">
+      <div
+        ref={messagesRef}
+        className="scrollbar scrollbar-thumb-teal-500 scrollbar-track-black h-[93%] w-full overflow-y-scroll bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))]  from-gray-700 via-gray-900 to-black  p-4 "
+      >
         {/* Chat messages go here */}
         {allMessages?.db_allMessages?.data.map((message) => (
           /* adjust alignment if current user */
