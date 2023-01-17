@@ -51,7 +51,7 @@ const ChatWindow = () => {
    */
   const [submitDisabled, setSubmitDisabled] = React.useState<boolean>(true);
   const [newMessage, setNewMessage] = React.useState<string>("");
-  const messagesRef = React.useRef(null);
+  const messagesRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
   }, [allMessages]); // Only re-run the effect if messages state changes
