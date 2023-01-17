@@ -1,13 +1,25 @@
 import React from "react";
+/**
+ * wundergraph stuff
+ */
 import {
   useQuery,
   useMutation,
   withWunderGraph,
 } from "../components/generated/nextjs";
+/**
+ * nextauth stuff
+ */
 import { useSession } from "next-auth/react";
+/**
+ * nextjs stuff
+ */
 import Link from "next/link";
+/**
+ * my utility funcs
+ */
 import epochToTimestampString from "../utils/epochToTimestampString";
-
+//--------------------------------------------------------------------------------------------------------------------------------
 const ChatWindow = () => {
   /**
    * get current session data with nextauth
@@ -57,23 +69,22 @@ const ChatWindow = () => {
     setNewMessage("");
     setSubmitDisabled(true);
   };
-
+  //--------------------------------------------------------------------------------------------------------------------
   return (
-    <div className="w-[80%] ">
-      <div className="w-full h-[93%] bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black p-4  overflow-y-scroll scrollbar scrollbar-thumb-teal-500  scrollbar-track-black ">
-        {/* <pre className="text-white">{currentUserID?.db_userIDByEmail}</pre> */}
+    <div className="w-[85%] ">
+      <div className="scrollbar scrollbar-thumb-teal-500 scrollbar-track-black h-[93%] w-full overflow-y-scroll bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))]  from-gray-700 via-gray-900 to-black  p-4 ">
         {/* Chat messages go here */}
         {allMessages?.db_allMessages?.data.map((message) => (
-          /* if message by currently logged-in user */
+          /* adjust alignment if current user */
           <div
             className={
               message.user?.email === session.user.email
-                ? "flex flex-col max-w-md  my-4 ml-auto mr-2 px-4 py-2 w-fit  text-gray-700 bg-zinc-200 rounded-lg"
-                : "flex flex-col max-w-md my-4 mr-auto ml-2 p-4 w-fit  text-zinc-200 bg-gray-900 rounded-lg  "
+                ? "my-4 ml-auto mr-2  flex w-fit max-w-md flex-col rounded-lg bg-zinc-200  px-4 py-2 text-gray-700"
+                : "my-4 mr-auto ml-2 flex w-fit max-w-md flex-col rounded-lg  bg-gray-900 p-4 text-zinc-200  "
             }
           >
             <Link href={`https://www.github.com/${message.user?.name}`}>
-              <span className="text-sm underline mb-2 cursor-pointer rounded-lg ">
+              <span className="mb-2 cursor-pointer rounded-lg text-sm underline ">
                 {message.user?.name}
               </span>
             </Link>
@@ -81,11 +92,11 @@ const ChatWindow = () => {
             <span className="font-bold ">{message.content}</span>
 
             <span
-              className={`text-xs text-right pt-2 ${
+              className={`pt-2 text-right text-xs ${
                 message.user?.email === session.user.email
                   ? "text-red-700"
                   : "text-teal-500"
-              } font-bold mb-2 rounded-lg`}
+              } mb-2 rounded-lg font-bold`}
             >
               {message.timestamp}
             </span>
@@ -93,7 +104,7 @@ const ChatWindow = () => {
         ))}
       </div>
       {/* Input field for sending messages */}
-      <div className="w-[98%] h-[7%] px-2 py-2">
+      <div className="h-[7%] w-[98%] px-2 py-2">
         <form onSubmit={handleSubmit} className="relative rounded-md shadow-sm">
           <input
             type="text"
@@ -107,11 +118,11 @@ const ChatWindow = () => {
               }
             }}
             placeholder="Type your message here..."
-            className="bg-zinc-200 text-gray-900 rounded-md focus:outline-none border-[1px] p-2 w-5/6 z-10"
+            className="z-10 w-5/6 rounded-md border-[1px] bg-zinc-200 p-2 text-gray-900 focus:outline-none"
           />
           <button
             type="submit"
-            className="w-1/6 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-r-full z-20 disabled:bg-teal-200 disabled:text-gray-500"
+            className="z-20 w-1/6 rounded-r-full bg-teal-500 py-2 px-4 font-bold text-white hover:bg-teal-700 disabled:bg-teal-200 disabled:text-gray-500"
             disabled={submitDisabled || isMutating}
           >
             Send

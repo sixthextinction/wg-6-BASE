@@ -5,6 +5,7 @@ Example :
     RETURNS: "Dec 20 07:30"
 */
 export default function formatTimestamp(timestamp: string): string {
+    // TODO
     return ""
   }
   

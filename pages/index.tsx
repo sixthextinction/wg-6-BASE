@@ -9,9 +9,6 @@ const Home: NextPage = () => {
     <div>
       {session ? (
         <div className="w-full h-[calc(100vh-85px)] ">
-          {/* <span className="text-red-500 font-semibold">
-            DEBUG: {JSON.stringify(session, null, 2)}
-          </span> */}
           <Chat />
         </div>
       ) : (
