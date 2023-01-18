@@ -1,9 +1,9 @@
-query AllSessions($userId: String! @internal) {
+query AllSessions($userId: ID! @internal) {
   db_allSessions {
-    data{
+    data {
       userId @export(as: "userId")
-      user: _join @transform(get: "db_userByUserID"){
-        db_userByUserID(userID: $userId) {
+      user: _join @transform(get: "db_findUsersByID") {
+        db_findUsersByID(id: $userId) {
           name
           email
           image

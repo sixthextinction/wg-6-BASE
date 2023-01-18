@@ -14,6 +14,7 @@ const OnlineUsers = () => {
           </div>
         </div>
       ))}
+      {/* <pre className="text-white">{JSON.stringify(onlineUsers, null, 2)}</pre> */}
     </div>
   );
 };

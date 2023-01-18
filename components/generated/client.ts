@@ -12,16 +12,16 @@ import {
 	FetchUserRequestOptions,
 } from "@wundergraph/sdk/client";
 import type {
-	AddMessageResponse,
-	AddMessageInput,
-	AddMessageResponseData,
 	AllMessagesResponse,
 	AllMessagesResponseData,
 	AllSessionsResponse,
 	AllSessionsResponseData,
-	UserByEmailResponse,
-	UserByEmailInput,
-	UserByEmailResponseData,
+	CreateMessageResponse,
+	CreateMessageInput,
+	CreateMessageResponseData,
+	UserIDByEmailResponse,
+	UserIDByEmailInput,
+	UserIDByEmailResponseData,
 } from "./models";
 
 export type UserRole = "admin" | "user";
@@ -41,22 +41,22 @@ export interface AuthProvider {
 }
 
 export const defaultClientConfig: ClientConfig = {
-	applicationHash: "184c3c1f",
+	applicationHash: "e3b4dbd8",
 	baseURL: "http://localhost:9991",
 	sdkVersion: "0.130.2",
 };
 
 export const operationMetadata: OperationMetadata = {
-	AddMessage: {
-		requiresAuthentication: false,
-	},
 	AllMessages: {
 		requiresAuthentication: false,
 	},
 	AllSessions: {
 		requiresAuthentication: false,
 	},
-	UserByEmail: {
+	CreateMessage: {
+		requiresAuthentication: false,
+	},
+	UserIDByEmail: {
 		requiresAuthentication: false,
 	},
 };
@@ -120,18 +120,18 @@ export type Queries = {
 		requiresAuthentication: false;
 		liveQuery: boolean;
 	};
-	UserByEmail: {
-		input: UserByEmailInput;
-		data: UserByEmailResponseData;
+	UserIDByEmail: {
+		input: UserIDByEmailInput;
+		data: UserIDByEmailResponseData;
 		requiresAuthentication: false;
 		liveQuery: boolean;
 	};
 };
 
 export type Mutations = {
-	AddMessage: {
-		input: AddMessageInput;
-		data: AddMessageResponseData;
+	CreateMessage: {
+		input: CreateMessageInput;
+		data: CreateMessageResponseData;
 		requiresAuthentication: false;
 	};
 };
@@ -151,9 +151,9 @@ export type LiveQueries = {
 		liveQuery: true;
 		requiresAuthentication: false;
 	};
-	UserByEmail: {
-		input: UserByEmailInput;
-		data: UserByEmailResponseData;
+	UserIDByEmail: {
+		input: UserIDByEmailInput;
+		data: UserIDByEmailResponseData;
 		liveQuery: true;
 		requiresAuthentication: false;
 	};
