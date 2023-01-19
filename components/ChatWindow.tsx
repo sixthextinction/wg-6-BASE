@@ -30,7 +30,7 @@ const ChatWindow = () => {
    */
   const { data: allMessages } = useQuery({
     operationName: "AllMessages",
-    // liveQuery:true
+    liveQuery:true
   });
   const { data: currentUserID } = useQuery({
     operationName: "UserIDByEmail",
