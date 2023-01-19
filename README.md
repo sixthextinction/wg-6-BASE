@@ -13,3 +13,5 @@ FAUNA_SECRET="XXXXXXXXXXXXXXXXX"
 FAUNADB_GRAPHQL_URL="https://graphql.us.fauna.com/graphql"
 FAUNADB_TOKEN="Bearer XXXXXXXXXXXXXXXXX"
 ```
+
+Fauna schema to be imported is `FaunaSchema.graphql` 
